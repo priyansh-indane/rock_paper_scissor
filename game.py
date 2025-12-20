@@ -1,16 +1,17 @@
 import random
 
 entity = ["rock", "paper", "scissor"]
-inx = random.randint(0, 2)
+inx: int = random.randint(0, 2)
 
-for _ in range(1,3):
+Rounds: int=int(input("Enter how many rounds you want to play?"))
+for _ in range(0,Rounds):
 
-    inx = random.randint(0, 2)
-    PC=entity[inx]
+    inx: int = random.randint(0, 2)
+    PC: str = entity[inx]
 
     print("pls enter your choice.")
 
-    USER=str(input("Enter any one-->(Rock,paper,scissor)")).lower()
+    USER = str(input("Enter any one-->(Rock,paper,scissor)")).lower()
 
     if PC==USER:
         print(f"The Match is a tie.you are {USER} pc is {PC}")
