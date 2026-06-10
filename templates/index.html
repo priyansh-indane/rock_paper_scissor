@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+
+        {% if not result %}
+        <p class="subtitle">Choose your move!</p>
+
+        <form method="POST" class="play-form">
+            <div class="choices">
+                <button type="submit" name="choice" value="rock" class="btn-rock">
+                    <span>🪨</span> Rock
+                </button>
+
+                <button type="submit" name="choice" value="paper" class="btn-paper">
+                    <span>📄</span> Paper
+                </button>
+
+                <button type="submit" name="choice" value="scissor" class="btn-scissor">
+                    <span>✂️</span> Scissor
+                </button>
+            </div>
+        </form>
+
+        {% else %}
+        <div class="result {{ result.outcome }}" id="result-box">
+            <p class="outcome-label">
+                {% if result.outcome == "win" %}
+                    🎉 You Won!
+                {% elif result.outcome == "lose" %}
+                    😞 You Lost!
+                {% elif result.outcome == "tie" %}
+                    🤝 It's a Tie!
+                {% else %}
+                    ⚠️ Invalid Choice
+                {% endif %}
+            </p>
+
+            {% if result.pc %}
+            <p class="matchup">
+                You: <strong>{{ result.user }}</strong>
+                vs
+                Computer: <strong>{{ result.pc }}</strong>
+            </p>
+            {% endif %}
+
+            <p class="message">{{ result.message }}</p>
+        </div>
+
+        <form method="GET" class="again-form">
+            <button type="submit" class="play-again">Play Again</button>
+        </form>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -2,38 +2,65 @@
 import random
 
 entity = ["rock", "paper", "scissor"]
-inx: int = random.randint(0, 2)
+VALID_CHOICES = set(entity)
 
-Rounds: int=int(input("Enter how many rounds you want to play?"))
-for _ in range(0,Rounds):
 
-    inx: int = random.randint(0, 2)
-    PC: str = entity[inx]
+def play_round(user_choice: str) -> dict:
+    user = user_choice.lower().strip()
 
-    print("pls enter your choice.")
+    if user not in VALID_CHOICES:
+        return {
+            "outcome": "invalid",
+            "user": user,
+            "pc": None,
+            "message": "Please choose rock, paper, or scissor.",
+        }
 
-    USER = str(input("Enter any one-->(Rock,paper,scissor)")).lower()
+    pc = random.choice(entity)
 
-    if PC==USER:
-        print(f"The Match is a tie.you are {USER} pc is {PC}")
-
-    elif(PC=="rock" or PC=="Rock") and (USER=="scissor" or USER=="Scissor"):
-        print(f"You lost PC is {PC} you are {USER}")
-
-    elif(PC=="Scissor" or PC=="scissor") and (USER=="rock" or USER=="Rock"):
-        print(f"You Won , as you are {USER} VS {PC}")
-
-    elif(PC=="paper" or PC=="Paper") and (USER=="rock" or USER=="Rock"):
-        print(f"You lost {PC} vs {USER}")
-
-    elif(PC=="rock" or PC=="Rock") and (USER=="Paper" or USER=="paper"):
-        print(f"You Won {PC} vs {USER}")  
-
-    elif(PC=="Scissor" or PC=="scissor") and (USER=="Paper" or USER=="paper"):
-        print(f"You Lost { PC} vs {USER}")
-
-    elif(PC=="Paper" or PC=="paper") and (USER=="scissor" or USER=="Scissor"):
-        print("you won {PC} vs {USER}")
-
+    if user == pc:
+        outcome = "tie"
+        message = f"It's a tie! You both chose {user}."
+    elif (
+        (user == "rock" and pc == "scissor")
+        or (user == "scissor" and pc == "paper")
+        or (user == "paper" and pc == "rock")
+    ):
+        outcome = "win"
+        message = f"You won! {user.capitalize()} beats {pc}."
     else:
-        print("pls enter valid string")       
+        outcome = "lose"
+        message = f"You lost! {pc.capitalize()} beats {user}."
+
+    return {
+        "outcome": outcome,
+        "user": user,
+        "pc": pc,
+        "message": message,
+    }
+
+
+if __name__ == "__main__":
+    print("Rock Paper Scissors")
+    print("Type q at any prompt to quit.\n")
+
+    while True:
+        print("--- New Round ---")
+        user = input("Rock, paper, or scissor: ")
+
+        if user.lower().strip() == "q":
+            print("Thanks for playing!")
+            break
+
+        result = play_round(user)
+        print(result["message"])
+
+        if result["outcome"] == "invalid":
+            continue
+
+        input("\nPress Enter to continue...")
+
+        again = input("Play again? (y/n): ").strip().lower()
+        if again != "y":
+            print("Thanks for playing!")
+            break
