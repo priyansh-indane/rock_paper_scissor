@@ -1,2 +1,2 @@
 # rock_paper_scissor
-Rock Paper Scissor game in python.
+Basic Rock Paper Scissor game in python.
